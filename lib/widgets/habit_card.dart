@@ -36,7 +36,7 @@ class _HabitCardState extends State<HabitCard> {
               textAlign: TextAlign.center,
             ),
             duration: const Duration(microseconds: 1000000),
-            shape: StadiumBorder(),
+            shape: const StadiumBorder(),
             behavior: SnackBarBehavior.floating,
           ),
         );

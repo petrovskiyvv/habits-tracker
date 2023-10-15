@@ -59,11 +59,11 @@ class _AddUpdateHabitPageState extends State<AddUpdateHabitPage> {
     return InputDecoration(
       hintText: hintText,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
         borderSide: BorderSide(color: Colors.grey[350]!, width: 1),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(8.0)),
         borderSide: BorderSide(color: Colors.grey[500]!, width: 2),
       ),
       filled: true,
