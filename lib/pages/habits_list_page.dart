@@ -85,93 +85,96 @@ class _HabitsListPageState extends State<HabitsListPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-            title: const Text('Привычки'),
-            bottom: const TabBar(
-              tabs: [
-                Tab(
-                  text: 'Хорошие',
-                  icon: Icon(Icons.sentiment_very_satisfied),
-                ),
-                Tab(
-                  text: 'Плохие',
-                  icon: Icon(Icons.sentiment_very_dissatisfied),
-                )
-              ],
-            )),
-        body: TabBarView(
+        body: Column(
           children: [
-            FutureBuilder<List<Habit>>(
-              future: goodHabits,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return const Text('Ошибка при загрузке привычек');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('Нет данных для отображения');
-                } else {
-                  List<Habit> habitsSnapshot = snapshot.data!;
-                  filteredGoodHabits = habitsSnapshot
-                      .where((habit) => habit.title
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase()))
-                      .toList();
-                  if (isReversed) {
-                    filteredGoodHabits = filteredGoodHabits.reversed.toList();
-                  }
-
-                  return ListView.builder(
-                      itemCount: filteredGoodHabits.length,
-                      itemBuilder: (context, index) {
-                        return HabitCard(
-                          habit: filteredGoodHabits[index],
-                          onPressed: () {
-                            HabitsApi().completeHabit(
-                                uid: filteredGoodHabits[index].uid);
-                          },
-                        );
-                      });
-                }
-              },
+            Container(
+              color: Colors.white,
+              child: const TabBar(
+                tabs: [
+                  Tab(text: 'Хорошие'),
+                  Tab(text: 'Плохие'),
+                ],
+              ),
             ),
-            FutureBuilder<List<Habit>>(
-              future: badHabits,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return const Text('Ошибка при загрузке привычек');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('Нет данных для отображения');
-                } else {
-                  List<Habit> habitsSnapshot = snapshot.data!;
-                  filteredBadHabits = habitsSnapshot
-                      .where((habit) => habit.title
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase()))
-                      .toList();
-                  if (isReversed) {
-                    filteredBadHabits = filteredBadHabits.reversed.toList();
-                  }
-
-                  return ListView.builder(
-                      itemCount: filteredBadHabits.length,
-                      itemBuilder: (context, index) {
-                        return HabitCard(
-                          habit: filteredBadHabits[index],
-                          onPressed: () {
-                            HabitsApi().completeHabit(
-                                uid: filteredBadHabits[index].uid);
-                          },
+            Expanded(
+              child: TabBarView(
+                children: [
+                  FutureBuilder<List<Habit>>(
+                    future: goodHabits,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
-                      });
-                }
-              },
+                      } else if (snapshot.hasError) {
+                        return const Text('Ошибка при загрузке привычек');
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('Нет данных для отображения');
+                      } else {
+                        List<Habit> habitsSnapshot = snapshot.data!;
+                        filteredGoodHabits = habitsSnapshot
+                            .where((habit) => habit.title
+                                .toLowerCase()
+                                .contains(searchQuery.toLowerCase()))
+                            .toList();
+                        if (isReversed) {
+                          filteredGoodHabits =
+                              filteredGoodHabits.reversed.toList();
+                        }
+
+                        return ListView.builder(
+                            itemCount: filteredGoodHabits.length,
+                            itemBuilder: (context, index) {
+                              return HabitCard(
+                                habit: filteredGoodHabits[index],
+                                onPressed: () {
+                                  HabitsApi().completeHabit(
+                                      uid: filteredGoodHabits[index].uid);
+                                },
+                              );
+                            });
+                      }
+                    },
+                  ),
+                  FutureBuilder<List<Habit>>(
+                    future: badHabits,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return const Text('Ошибка при загрузке привычек');
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Text('Нет данных для отображения');
+                      } else {
+                        List<Habit> habitsSnapshot = snapshot.data!;
+                        filteredBadHabits = habitsSnapshot
+                            .where((habit) => habit.title
+                                .toLowerCase()
+                                .contains(searchQuery.toLowerCase()))
+                            .toList();
+                        if (isReversed) {
+                          filteredBadHabits =
+                              filteredBadHabits.reversed.toList();
+                        }
+
+                        return ListView.builder(
+                            itemCount: filteredBadHabits.length,
+                            itemBuilder: (context, index) {
+                              return HabitCard(
+                                habit: filteredBadHabits[index],
+                                onPressed: () {
+                                  HabitsApi().completeHabit(
+                                      uid: filteredBadHabits[index].uid);
+                                },
+                              );
+                            });
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

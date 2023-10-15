@@ -45,6 +45,16 @@ class _HabitCardState extends State<HabitCard> {
     widget.onPressed();
   }
 
+  String getPriorityText() {
+    if (widget.habit.priority == 2) {
+      return 'Приоритет: высокий';
+    } else if (widget.habit.priority == 1) {
+      return 'Приоритет: средний';
+    } else {
+      return 'Приоритет: низкий';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -64,9 +74,9 @@ class _HabitCardState extends State<HabitCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(widget.habit.description),
-            const SizedBox(height: 8),
-            Text('Приоритет: ${widget.habit.priority}'),
             const SizedBox(height: 4),
+            Text(getPriorityText()),
+            const SizedBox(height: 2),
             Text('Периодичность: ${widget.habit.frequency}'),
           ],
         ),
