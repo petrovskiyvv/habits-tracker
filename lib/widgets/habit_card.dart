@@ -27,13 +27,19 @@ class _HabitCardState extends State<HabitCard> {
             ? 'Стоит выполнить еще $differenceCount'
             : 'You are breathtaking!';
       }
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(textContent),
-          duration: const Duration(microseconds: 1000000),
-        ),
-      );
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(
+              textContent,
+              textAlign: TextAlign.center,
+            ),
+            duration: const Duration(microseconds: 1000000),
+            shape: StadiumBorder(),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
     });
     // Вызов переданного onPressed
     widget.onPressed();
