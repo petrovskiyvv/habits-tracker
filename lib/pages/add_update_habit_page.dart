@@ -55,6 +55,22 @@ class _AddUpdateHabitPageState extends State<AddUpdateHabitPage> {
     super.dispose();
   }
 
+  InputDecoration _inputDecoration(String hintText) {
+    return InputDecoration(
+      hintText: hintText,
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderSide: BorderSide(color: Colors.grey[350]!, width: 1),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderSide: BorderSide(color: Colors.grey[500]!, width: 2),
+      ),
+      filled: true,
+      fillColor: Colors.white,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -72,19 +88,7 @@ class _AddUpdateHabitPageState extends State<AddUpdateHabitPage> {
           children: <Widget>[
             TextFormField(
               controller: _nameHabitController,
-              decoration: const InputDecoration(
-                hintText: 'Введите название привычки',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
+              decoration: _inputDecoration('Введите название привычки'),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Пожалуйста, дайте название';
@@ -97,19 +101,7 @@ class _AddUpdateHabitPageState extends State<AddUpdateHabitPage> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _descriptionHabitController,
-              decoration: const InputDecoration(
-                hintText: 'Опишите привычку',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
+              decoration: _inputDecoration('Опишите привычку'),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Это обязательное поле';
@@ -139,25 +131,14 @@ class _AddUpdateHabitPageState extends State<AddUpdateHabitPage> {
                   _selectedPriority = priorityValue!;
                 });
               },
-              decoration: const InputDecoration(
-                labelText: 'Приоритет',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
+              decoration: _inputDecoration('Приоритет'),
             ),
             const SizedBox(height: 16),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                border: Border.all(color: Colors.grey[350]!, width: 1),
               ),
               child: Column(
                 children: _habitTypes
@@ -183,20 +164,7 @@ class _AddUpdateHabitPageState extends State<AddUpdateHabitPage> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _countController,
-              decoration: const InputDecoration(
-                labelText: 'Количество выполнений',
-                hintText: 'за период',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
+              decoration: _inputDecoration('Количество выполнений'),
               keyboardType: TextInputType.phone,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(10),
@@ -212,20 +180,7 @@ class _AddUpdateHabitPageState extends State<AddUpdateHabitPage> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _frequencyController,
-              decoration: const InputDecoration(
-                labelText: 'Периодичность',
-                hintText: 'в днях',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
+              decoration: _inputDecoration('Периодичность (в днях)'),
               keyboardType: TextInputType.phone,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(10),
