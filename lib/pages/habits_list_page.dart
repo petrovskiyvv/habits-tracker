@@ -19,9 +19,9 @@ class _HabitsListPageState extends State<HabitsListPage> {
   List<Habit> filteredGoodHabits = [];
   List<Habit> filteredBadHabits = [];
 
-  bool isIconMirrored = false;
+  bool isReversed = false;
 
-  late TextEditingController searchController;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void dispose() {
@@ -50,9 +50,7 @@ class _HabitsListPageState extends State<HabitsListPage> {
                 children: [
                   ElevatedButton.icon(
                     onPressed: () {
-                      setState(() {
-                        isIconMirrored = !isIconMirrored;
-                      });
+                      isReversed = !isReversed;
                     },
                     icon: const Icon(Icons.sort),
                     label: const Text('Сортировать'),
@@ -60,7 +58,7 @@ class _HabitsListPageState extends State<HabitsListPage> {
                   const SizedBox(width: 16.0),
                   ElevatedButton(
                     onPressed: () {
-                      filterHabitCards(searchController.text);
+                      setState(() {});
                       Navigator.pop(context);
                     },
                     child: const Text('Поиск'),
@@ -74,21 +72,11 @@ class _HabitsListPageState extends State<HabitsListPage> {
     );
   }
 
-  void filterHabitCards(String searchQuery) {
-    setState(() {
-      if (isIconMirrored) {
-      filteredGoodHabits = filteredGoodHabits.reversed.toList();
-      filteredBadHabits = filteredBadHabits.reversed.toList();
-    }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     goodHabits = HabitsApi().fetchHabitWithType(type: 0);
     badHabits = HabitsApi().fetchHabitWithType(type: 1);
-    searchController = TextEditingController();
   }
 
   @override
@@ -113,7 +101,6 @@ class _HabitsListPageState extends State<HabitsListPage> {
             )),
         body: TabBarView(
           children: [
-            // Вкладка
             FutureBuilder<List<Habit>>(
               future: goodHabits,
               builder: (context, snapshot) {
@@ -132,6 +119,9 @@ class _HabitsListPageState extends State<HabitsListPage> {
                           .toLowerCase()
                           .contains(searchQuery.toLowerCase()))
                       .toList();
+                  if (isReversed) {
+                    filteredGoodHabits = filteredGoodHabits.reversed.toList();
+                  }
 
                   return ListView.builder(
                       itemCount: filteredGoodHabits.length,
@@ -165,6 +155,9 @@ class _HabitsListPageState extends State<HabitsListPage> {
                           .toLowerCase()
                           .contains(searchQuery.toLowerCase()))
                       .toList();
+                  if (isReversed) {
+                    filteredBadHabits = filteredBadHabits.reversed.toList();
+                  }
 
                   return ListView.builder(
                       itemCount: filteredBadHabits.length,
